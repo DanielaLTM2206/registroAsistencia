@@ -17,6 +17,7 @@
     <div id="mensaje"></div>
 
     <script>
+        // Función para obtener parámetros de la URL
         function obtenerParametrosURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return {
@@ -30,6 +31,7 @@
             };
         }
 
+        // Función para mostrar los detalles de la reunión
         function mostrarDetallesReunion() {
             const detalles = obtenerParametrosURL();
             const detallesDiv = document.getElementById('detallesReunion');
@@ -50,32 +52,33 @@
             `;
         }
 
+        // Manejar el envío del formulario
         document.getElementById('registroForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const nombre = document.getElementById('nombre').value;
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
 
-    // URL de tu Web App
-    const url = 'https://script.google.com/macros/s/AKfycbycBqLphMOGl-7pu1R5SfTrbafYy1whj_WQCofDMDBNKlIS5zPcqaUv4qNnK-TvMtkdDQ/exec';
+            // URL de tu Web App
+            const url = 'https://script.google.com/macros/s/AKfycbycBqLphMOGl-7pu1R5SfTrbafYy1whj_WQCofDMDBNKlIS5zPcqaUv4qNnK-TvMtkdDQ/exec';
 
-    // Realizar la solicitud fetch
-    fetch(`${url}?nombre=${encodeURIComponent(nombre)}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('mensaje').textContent = data;
-        document.getElementById('registroForm').reset();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('mensaje').textContent = 'Error al registrar la asistencia.';
-    });
-});
+            // Realizar la solicitud fetch
+            fetch(`${url}?nombre=${encodeURIComponent(nombre)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('mensaje').textContent = data;
+                document.getElementById('registroForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('mensaje').textContent = 'Error al registrar la asistencia.';
+            });
+        });
 
-
+        // Mostrar detalles de la reunión al cargar la página
         window.onload = mostrarDetallesReunion;
     </script>
 </body>
