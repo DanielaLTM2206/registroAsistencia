@@ -51,33 +51,30 @@
         }
 
         document.getElementById('registroForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const nombre = document.getElementById('nombre').value;
+    event.preventDefault();
+    const nombre = document.getElementById('nombre').value;
 
-            // Aquí se envían los datos a la hoja de cálculo a través de la URL de Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbycBqLphMOGl-7pu1R5SfTrbafYy1whj_WQCofDMDBNKlIS5zPcqaUv4qNnK-TvMtkdDQ/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    nombre: nombre,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === 'success') {
-                    document.getElementById('mensaje').textContent = 'Asistencia registrada con éxito.';
-                    document.getElementById('registroForm').reset();
-                } else {
-                    document.getElementById('mensaje').textContent = 'Hubo un problema al registrar la asistencia.';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('mensaje').textContent = 'Error al conectar con el servidor.';
-            });
-        });
+    // URL de tu Web App
+    const url = 'https://script.google.com/macros/s/AKfycbycBqLphMOGl-7pu1R5SfTrbafYy1whj_WQCofDMDBNKlIS5zPcqaUv4qNnK-TvMtkdDQ/exec';
+
+    // Realizar la solicitud fetch
+    fetch(`${url}?nombre=${encodeURIComponent(nombre)}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('mensaje').textContent = data;
+        document.getElementById('registroForm').reset();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('mensaje').textContent = 'Error al registrar la asistencia.';
+    });
+});
+
 
         window.onload = mostrarDetallesReunion;
     </script>
