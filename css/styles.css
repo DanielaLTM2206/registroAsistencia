@@ -1,0 +1,56 @@
+@charset "utf-8";
+    #detallesReunion {
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    #detallesReunion p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    h1 {
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    #mensaje {
+        margin-top: 20px;
+        font-size: 14px;
+        color: green;
+    }
+
+/* CSS Document */
+

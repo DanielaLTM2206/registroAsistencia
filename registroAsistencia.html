@@ -53,29 +53,28 @@
             event.preventDefault();
             const nombre = document.getElementById('nombre').value;
 
-            // Enviar los datos a la hoja de cálculo
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbycBqLphMOGl-7pu1R5SfTrbafYy1whj_WQCofDMDBNKlIS5zPcqaUv4qNnK-TvMtkdDQ/exec';
-            fetch(scriptURL, {
+            // Aquí se envían los datos a la hoja de cálculo a través de la URL de Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbycBqLphMOGl-7pu1R5SfTrbafYy1whj_WQCofDMDBNKlIS5zPcqaUv4qNnK-TvMtkdDQ/exec', {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
-                body: new URLSearchParams({
-                    'nombre': nombre,
-                    'tema': new URLSearchParams(window.location.search).get('tema'),
-                    'fecha': new URLSearchParams(window.location.search).get('fecha'),
-                    'hora': new URLSearchParams(window.location.search).get('hora'),
-                    'objetivo': new URLSearchParams(window.location.search).get('objetivo'),
-                    'tipo': new URLSearchParams(window.location.search).get('tipo'),
-                    'area': new URLSearchParams(window.location.search).get('area'),
-                })
-            }).then(response => {
-                document.getElementById('mensaje').textContent = 'Asistencia registrada.';
-                document.getElementById('registroForm').reset();
-            }).catch(error => {
-                document.getElementById('mensaje').textContent = 'Hubo un error al registrar la asistencia.';
+                body: JSON.stringify({
+                    nombre: nombre,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    document.getElementById('mensaje').textContent = 'Asistencia registrada con éxito.';
+                    document.getElementById('registroForm').reset();
+                } else {
+                    document.getElementById('mensaje').textContent = 'Hubo un problema al registrar la asistencia.';
+                }
+            })
+            .catch(error => {
                 console.error('Error:', error);
+                document.getElementById('mensaje').textContent = 'Error al conectar con el servidor.';
             });
         });
 
