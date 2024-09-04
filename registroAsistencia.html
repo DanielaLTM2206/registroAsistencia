@@ -53,12 +53,30 @@
             event.preventDefault();
             const nombre = document.getElementById('nombre').value;
 
-            // Aquí podrías guardar la asistencia en un backend o base de datos
-            console.log(`Asistente: ${nombre}`);
-
-            document.getElementById('mensaje').textContent = 'Asistencia registrada.';
-            document.getElementById('registroForm').reset();
-			//registro
+            // Enviar los datos a la hoja de cálculo
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbycBqLphMOGl-7pu1R5SfTrbafYy1whj_WQCofDMDBNKlIS5zPcqaUv4qNnK-TvMtkdDQ/exec';
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'nombre': nombre,
+                    'tema': new URLSearchParams(window.location.search).get('tema'),
+                    'fecha': new URLSearchParams(window.location.search).get('fecha'),
+                    'hora': new URLSearchParams(window.location.search).get('hora'),
+                    'objetivo': new URLSearchParams(window.location.search).get('objetivo'),
+                    'tipo': new URLSearchParams(window.location.search).get('tipo'),
+                    'area': new URLSearchParams(window.location.search).get('area'),
+                })
+            }).then(response => {
+                document.getElementById('mensaje').textContent = 'Asistencia registrada.';
+                document.getElementById('registroForm').reset();
+            }).catch(error => {
+                document.getElementById('mensaje').textContent = 'Hubo un error al registrar la asistencia.';
+                console.error('Error:', error);
+            });
         });
 
         window.onload = mostrarDetallesReunion;
