@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Asistencia</title>
+</head>
+<body>
+    <h1>Registro de Asistencia</h1>
+    <form id="registroForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required>
+        <button type="submit">Registrar Asistencia</button>
+    </form>
+    <div id="mensaje"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const reunionId = urlParams.get('id');
+
+        document.getElementById('registroForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+
+            // Aquí podrías guardar la asistencia en un backend o base de datos
+            console.log(`Reunión ID: ${reunionId}, Asistente: ${nombre}`);
+
+            document.getElementById('mensaje').textContent = 'Asistencia registrada.';
+            document.getElementById('registroForm').reset();
+        });
+    </script>
+</body>
+</html>
